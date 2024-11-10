@@ -12,18 +12,10 @@ from database_manager import (conn, create_table_key_skills,
                               insert_vacancies, insert_vacancy_key_skills,
                               insert_vacancy_professional_roles)
 from secret import access_token, app_name, email
+from vacancy_manager_config import (experience_ranges_by_name,
+                                    vacancy_request_url, vacancy_search_areas,
+                                    vacancy_search_period, vacancy_search_text)
 
-vacancy_request_url = 'https://api.hh.ru/vacancies/'
-vacancy_search_text = "Frontend-разработчик"
-vacancy_search_areas = [1, 2]
-vacancy_search_period = 1825
-experience_ranges_by_name = {
-    'Нет опыта': [0, 0],
-    'От 1 года до 3 лет': [1, 3],
-    'От 3 до 6 лет': [3, 6],
-    'Более 6 лет': [6, None],
-    None: [None, None]
-}
 
 def get_page_num_count() -> int:
     time.sleep(0.15)

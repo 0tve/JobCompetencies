@@ -1,3 +1,4 @@
 secret.py
 token_manager.py
 __pycache__/
+vacancy_manager_config.py
