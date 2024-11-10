@@ -1,10 +1,18 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
-templates = Jinja2Templates(directory='templates')
+origins = [
+    'http://localhost:3000'
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*']
+)
 
-@app.get('/', response_class=HTMLResponse)
-async def hello_world(request: Request):
-    return templates.TemplateResponse(request, 'index.html', {'message': 'Hello!!!!!'})
+@app.get('/')
+async def hello_world():
+    return {'text': 'hello world'}
