@@ -1,28 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
 
-function App() {
-  const [data, setData] = useState("");
-  const [functionName, setFunctionName] = useState("");
+import React from 'react';
+import {
+  Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
+} from 'recharts';
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/")
-      .then(response => response.json())
-      .then(data => {
-        setFunctionName(data.function_name); 
-        setData(data.text); 
-      })
-      .catch(error => console.error("Error fetching data:", error));
-  }, []);
+const param = [
+  {
+    subject: 'JavaScript', A: 3.5, fullMark: 10,
+  },
+  {
+    subject: 'React', A: 9.8, fullMark: 10,
+  },
+  {
+    subject: 'CSS', A: 8.6, fullMark: 10,
+  },
+  {
+    subject: 'HTML', A: 6.7, fullMark: 10,
+  },
+  {
+    subject: 'NodeJS', A: 5.1, fullMark: 10,
+  },
+  {
+    subject: 'Pyhone', A: 2.1, fullMark: 10,
+  },
+];
 
+const App = () => {
   return (
-    <div className="container">
-      <div className="cell">
-        <h1>{functionName}</h1>
-        <p>{data}</p>
-      </div>
-    </div>
+    <RadarChart outerRadius={90} width={500} height={500} data={param} >
+      <PolarGrid />
+      <PolarAngleAxis dataKey="subject" />
+      <PolarRadiusAxis tick={false} axisLine={false} domain={[0, 10]} tickCount={10}/>
+      <Radar name="Mike" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} dot/>
+    </RadarChart>
   );
-}
+};
 
 export default App;
+
