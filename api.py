@@ -12,7 +12,18 @@ app.add_middleware(
     allow_methods=['*'],
     allow_headers=['*']
 )
-
-@app.get('/')
+@app.get('/routes')
+async def get_routes():
+    return {
+        "endpoints": [
+            "/hello",
+            "/hellos"
+        ]
+    }
+@app.get('/hello')
 async def hello_world():
     return {'text': 'hello world'}
+
+@app.get('/hellos')
+async def hello_world():
+    return {'text': 'hellos world'}
