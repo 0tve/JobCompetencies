@@ -1,0 +1,1 @@
+token_request_url = 'https://api.hh.ru/token'

@@ -27,14 +27,14 @@ const param = [
 
 const App = () => {
   return (
-    <RadarChart outerRadius={90} width={500} height={500} data={param} >
-      <PolarGrid />
-      <PolarAngleAxis dataKey="subject" />
-      <PolarRadiusAxis tick={false} axisLine={false} domain={[0, 11]} tickCount={10}/>
-      <Radar name="Mike" dataKey="A" stroke="#8884d8" fill="#8884d8" fillOpacity={0.6} dot/>
-    </RadarChart>
+    <div className="container">
+      
+      <div className="cell">
+        <h1>{functionName}</h1>
+        <p>{data}</p>
+      </div>
+    </div>
   );
-};
+}
 
 export default App;
-
