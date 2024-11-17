@@ -156,3 +156,22 @@ def export_vacancies_denormalized(file_path: str):
                 """),
             f
         )
+        
+def export_table_to_csv(table_name: str):
+    
+    with open(f'output/{table_name}.csv', 'w+', encoding='utf-8') as f:
+        cur.copy_expert(
+            textwrap.dedent(f"""\
+                COPY (
+                    SELECT
+                        *
+                    FROM
+                        {table_name}
+                ) TO STDOUT WITH (
+                        FORMAT csv,
+                        ENCODING 'UTF8',
+                        HEADER true
+                    );\
+                """),
+            f
+        )
