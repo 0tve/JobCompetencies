@@ -5,10 +5,10 @@ import psycopg2
 from psycopg2.extensions import connection
 from psycopg2.extras import execute_values
 
-from cfg.secret import database_config
 from cfg.database_cfg import (key_skills_fields, professional_roles_fields,
-                               vacancies_fields, vacancy_key_skills_fields,
-                               vacancy_professional_roles_fields)
+                              vacancies_fields, vacancy_key_skills_fields,
+                              vacancy_professional_roles_fields)
+from cfg.secret import database_config
 
 conn: connection = psycopg2.connect(**database_config)
 cur = conn.cursor()
@@ -157,9 +157,9 @@ def export_vacancies_denormalized(file_path: str):
             f
         )
         
-def export_table_to_csv(table_name: str):
+def export_table_to_csv(file_path: str, table_name: str):
     
-    with open(f'output/{table_name}.csv', 'w+', encoding='utf-8') as f:
+    with open(file_path, 'w+', encoding='utf-8') as f:
         cur.copy_expert(
             textwrap.dedent(f"""\
                 COPY (
@@ -167,6 +167,22 @@ def export_table_to_csv(table_name: str):
                         *
                     FROM
                         {table_name}
+                ) TO STDOUT WITH (
+                        FORMAT csv,
+                        ENCODING 'UTF8',
+                        HEADER true
+                    );\
+                """),
+            f
+        )
+        
+def export_query_result_to_csv(file_path: str, query: str):
+    
+    with open(file_path, 'w+', encoding='utf-8') as f:
+        cur.copy_expert(
+            textwrap.dedent(f"""\
+                COPY (
+                    {query[:-1] if query[-1] == ';' else query}
                 ) TO STDOUT WITH (
                         FORMAT csv,
                         ENCODING 'UTF8',
