@@ -1,6 +1,6 @@
 import os
 
-from src.database import export_table_to_csv
+from src.database import export_table
 
 if __name__ == '__main__':
     dir_path = 'output/'
@@ -11,4 +11,4 @@ if __name__ == '__main__':
     print('Введите название таблицы:', end=' ')
     table_name = input()
     file_path = f'{dir_path}{table_name}.csv'
-    export_table_to_csv(file_path, table_name)
+    export_table(file_path, table_name)

@@ -51,13 +51,15 @@ def get_vacancy_id_all(page_num_count: int) -> list[str]:
 
 def get_vacancy_data(vacancy_id: str) -> dict[str, Any]:
     time.sleep(0.15)
-    return requests.get(
+    response = requests.get(
         url = f'{vacancy_request_url}{vacancy_id}/',
         headers = {
             'User-Agent': f'{app_name} ({email})',
             'Authorization': f'Bearer {access_token}'
         }
     ).json()
+    print(response)
+    return response
 
 def get_vacancy_data_all(vacancy_id_all: list[str]) -> list[dict[str, Any]]:
     vacancy_data_all = []
