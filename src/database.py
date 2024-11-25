@@ -124,40 +124,8 @@ def insert_vacancy_professional_roles(vacancy_professional_roles_all: list[tuple
             """),
         vacancy_professional_roles_all
     )
-    
-def export_vacancies_denormalized(file_path: str):
-    
-    with open(file_path, 'w+', encoding='utf-8') as f:
-        cur.copy_expert(
-            textwrap.dedent(f"""\
-                COPY (
-                    SELECT
-                        v.*,
-                        vks.vacancy_key_skills,
-                        vpr.vacancy_professional_roles
-                    FROM vacancies AS v
-                    LEFT JOIN (
-                        SELECT vks.vacancy_id,
-                            STRING_AGG(REPLACE(vks.key_skill_name, ' ', '_'), ' ') AS vacancy_key_skills
-                        FROM vacancy_key_skills AS vks
-                        GROUP BY vks.vacancy_id
-                    ) AS vks ON vks.vacancy_id = v.vacancy_id
-                    LEFT JOIN (
-                        SELECT vpr.vacancy_id,
-                            STRING_AGG(REPLACE(vpr.professional_role_name, ' ', '_'), ' ') AS vacancy_professional_roles
-                        FROM vacancy_professional_roles AS vpr
-                        GROUP BY vpr.vacancy_id
-                    ) AS vpr ON vpr.vacancy_id = v.vacancy_id
-                ) TO STDOUT WITH (
-                        FORMAT csv,
-                        ENCODING 'UTF8',
-                        HEADER true
-                    );\
-                """),
-            f
-        )
         
-def export_table_to_csv(file_path: str, table_name: str):
+def export_table(file_path: str, table_name: str):
     
     with open(file_path, 'w+', encoding='utf-8') as f:
         cur.copy_expert(
@@ -176,7 +144,7 @@ def export_table_to_csv(file_path: str, table_name: str):
             f
         )
         
-def export_query_result_to_csv(file_path: str, query: str):
+def export_query_result(file_path: str, query: str):
     
     with open(file_path, 'w+', encoding='utf-8') as f:
         cur.copy_expert(
