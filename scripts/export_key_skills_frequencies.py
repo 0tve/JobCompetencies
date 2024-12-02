@@ -20,6 +20,6 @@ if __name__ == '__main__':
         ORDER BY 
             KEY_SKILL_FREQUENCY DESC\
         """)
-    file_path = f'{dir_path}key_skill_frequencies.csv'
+    file_path = f'{dir_path}key_skills_frequencies.csv'
     export_query_result(file_path, query)
     
