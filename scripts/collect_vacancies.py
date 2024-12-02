@@ -1,15 +1,29 @@
+import logging
+import os
+
 from src.database import (conn, create_table_key_skills,
-                              create_table_professional_roles,
-                              create_table_vacancies,
-                              create_table_vacancy_key_skills,
-                              create_table_vacancy_professional_roles, cur,
-                              insert_key_skills, insert_professional_roles,
-                              insert_vacancies, insert_vacancy_key_skills,
-                              insert_vacancy_professional_roles)
+                          create_table_professional_roles,
+                          create_table_vacancies,
+                          create_table_vacancy_key_skills,
+                          create_table_vacancy_professional_roles, cur,
+                          insert_key_skills, insert_professional_roles,
+                          insert_vacancies, insert_vacancy_key_skills,
+                          insert_vacancy_professional_roles)
 from src.parser import (get_page_num_count, get_vacancy_data_all,
-                            get_vacancy_data_clean, get_vacancy_id_all,
-                            get_vacancy_key_skills,
-                            get_vacancy_professional_roles)
+                        get_vacancy_data_clean, get_vacancy_id_all,
+                        get_vacancy_key_skills, get_vacancy_professional_roles)
+
+log_dir = 'logs/'
+
+if not os.path.exists(log_dir):
+    os.mkdir(log_dir)
+
+logging.basicConfig(
+    filename=f'{log_dir}collect_vacancies.log',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    encoding='utf-8'
+)
 
 if __name__ == '__main__':
     vacancy_data_clean_all = []
@@ -20,6 +34,7 @@ if __name__ == '__main__':
     page_num_count = get_page_num_count()
     vacancy_id_all = get_vacancy_id_all(page_num_count)
     vacancy_data_all = get_vacancy_data_all(vacancy_id_all)
+    logging.info(f'Вакансии собраны: {vacancy_data_all}')
 
     for vacancy_data in vacancy_data_all:
         vacancy_id = vacancy_data.get('id')
