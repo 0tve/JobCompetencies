@@ -67,4 +67,3 @@ const CompetencyRadarChart = () => {
 };
 
 export default CompetencyRadarChart;
->>>>>>> jc/6-create-job-competencies-map-visualizer
